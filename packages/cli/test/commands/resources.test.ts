@@ -321,6 +321,18 @@ describe('analytics query', () => {
     ).rejects.toMatchObject({ code: 'BAD_ARGS' })
   })
 
+  it('rejects a startRow above the API int32 limit', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        startRow: 3_000_000_000,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
   it('throws when neither --start nor --days provided', async () => {
     const c = mkClient()
     await expect(runAnalyticsQuery({ client: c as never, siteUrl: 'https://a/' })).rejects.toThrow(

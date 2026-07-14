@@ -38,6 +38,9 @@ const DATA_STATES = ['final', 'all'] as const
 
 const AGGREGATION_TYPES = ['auto', 'byPage', 'byProperty', 'byNewsShowcasePanel'] as const
 
+// The Search Console API's startRow is an int32; larger values 400 at the server.
+const GSC_MAX_START_ROW = 2_147_483_647
+
 function parseAggregationType(raw: string): AggregationType {
   if ((AGGREGATION_TYPES as readonly string[]).includes(raw)) return raw as AggregationType
   throw Object.assign(new Error(`invalid aggregation type: ${raw}`), {
@@ -104,10 +107,14 @@ export async function runAnalyticsQuery(options: AnalyticsQueryOptions) {
     queryInput.aggregationType = parseAggregationType(options.aggregationType)
   }
   if (options.startRow !== undefined) {
-    if (!Number.isInteger(options.startRow) || options.startRow < 0) {
+    if (
+      !Number.isInteger(options.startRow) ||
+      options.startRow < 0 ||
+      options.startRow > GSC_MAX_START_ROW
+    ) {
       throw Object.assign(new Error(`invalid start row: ${options.startRow}`), {
         code: 'BAD_ARGS',
-        hint: 'start row must be a non-negative integer (zero-based offset)',
+        hint: `start row must be a non-negative integer <= ${GSC_MAX_START_ROW} (zero-based offset)`,
       })
     }
     queryInput.startRow = options.startRow
