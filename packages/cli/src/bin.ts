@@ -317,7 +317,7 @@ const analyticsQuery = defineCommand({
         if (args.limit !== undefined && args.limit !== '') opts.limit = Number(args.limit)
         if (args.type !== undefined && args.type !== '') opts.type = args.type as SearchType
         const dataState = args['data-state']
-        if (dataState !== undefined && dataState !== '') {
+        if (dataState !== undefined) {
           opts.dataState = dataState as 'final' | 'all'
         }
         if (args.filter !== undefined && args.filter !== '') {

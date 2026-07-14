@@ -185,6 +185,31 @@ describe('analytics query', () => {
     expect(arg).not.toHaveProperty('dataState')
   })
 
+  it('passes an explicit dataState of final through to the SDK', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+      dataState: 'final',
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.dataState).toBe('final')
+  })
+
+  it('rejects an empty dataState rather than silently defaulting', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        dataState: '' as never,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
   it('rejects an invalid dataState', async () => {
     const c = mkClient()
     await expect(
