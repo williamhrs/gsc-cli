@@ -287,6 +287,11 @@ const analyticsQuery = defineCommand({
       type: 'string' as const,
       description: 'Search type: web, image, video, news, discover, googleNews',
     },
+    'data-state': {
+      type: 'string' as const,
+      description:
+        'Data freshness: final (default, excludes last ~2-3 days) or all (includes fresh data)',
+    },
     filter: {
       type: 'string' as const,
       description:
@@ -311,6 +316,10 @@ const analyticsQuery = defineCommand({
         if (dims !== undefined) opts.dimensions = dims
         if (args.limit !== undefined && args.limit !== '') opts.limit = Number(args.limit)
         if (args.type !== undefined && args.type !== '') opts.type = args.type as SearchType
+        const dataState = args['data-state']
+        if (dataState !== undefined && dataState !== '') {
+          opts.dataState = dataState as 'final' | 'all'
+        }
         if (args.filter !== undefined && args.filter !== '') {
           opts.filters = args.filter.split(',').map((f) => f.trim()).filter(Boolean)
         }

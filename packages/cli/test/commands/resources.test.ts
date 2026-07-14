@@ -160,6 +160,43 @@ describe('analytics query', () => {
     expect(arg.endDate).toBe('2026-01-31')
   })
 
+  it('passes dataState through to the SDK', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+      dataState: 'all',
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.dataState).toBe('all')
+  })
+
+  it('omits dataState when not specified', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg).not.toHaveProperty('dataState')
+  })
+
+  it('rejects an invalid dataState', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        dataState: 'bogus' as never,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
   it('throws when neither --start nor --days provided', async () => {
     const c = mkClient()
     await expect(runAnalyticsQuery({ client: c as never, siteUrl: 'https://a/' })).rejects.toThrow(
