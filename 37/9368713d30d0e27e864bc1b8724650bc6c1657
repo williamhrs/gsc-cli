@@ -1,0 +1,19 @@
+packages/cli/test/commands/resources.test.ts
+  s_cf20964e99ff57::t_bcddf520102504 250-274
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "379368713d30d0e27e864bc1b8724650bc6c1657",
+  "prompts": {},
+  "sessions": {
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
