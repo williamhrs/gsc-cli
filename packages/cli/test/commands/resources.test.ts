@@ -201,7 +201,7 @@ describe('analytics query', () => {
     expect(arg.dimensions).toEqual(['hour'])
   })
 
-  it('accepts the hourly_all data state', async () => {
+  it('pairs the hour dimension with the hourly_all data state', async () => {
     const c = mkClient()
     c.analytics.query.mockResolvedValue({ rows: [] })
     await runAnalyticsQuery({
@@ -212,6 +212,7 @@ describe('analytics query', () => {
       dataState: 'hourly_all',
     })
     const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.dimensions).toEqual(['hour'])
     expect(arg.dataState).toBe('hourly_all')
   })
 
