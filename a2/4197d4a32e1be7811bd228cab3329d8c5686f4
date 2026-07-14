@@ -1,0 +1,31 @@
+.changeset/inspect-language.md
+  s_cf20964e99ff57::t_670982b20c4d5a 1-5
+packages/cli/src/bin.ts
+  s_634c494fa699cf::t_9c6bb08f19a94d 387-390,428-429,433-438
+packages/cli/test/commands/resources.test.ts
+  s_634c494fa699cf::t_ac83091a6c51ba 503-528
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "a24197d4a32e1be7811bd228cab3329d8c5686f4",
+  "prompts": {},
+  "sessions": {
+    "s_634c494fa699cf": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f62c2-fe70-7a41-949e-26eeba9c03f9",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    },
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
