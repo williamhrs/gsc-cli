@@ -1,0 +1,20 @@
+packages/cli/src/commands/inspect-sitemap.ts
+  s_cf20964e99ff57::t_48ad441ed613ad 2
+  s_cf20964e99ff57::t_45670b0ad398ef 51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "41d130345cce5386c85c1439eb364a662b7cde8c",
+  "prompts": {},
+  "sessions": {
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
