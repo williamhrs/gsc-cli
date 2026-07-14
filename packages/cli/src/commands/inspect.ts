@@ -15,7 +15,7 @@ export async function runInspectUrl(options: InspectUrlOptions) {
     siteUrl: options.siteUrl,
     inspectionUrl: options.url,
   }
-  if (options.languageCode !== undefined) {
+  if (options.languageCode !== undefined && options.languageCode !== '') {
     inspectInput.languageCode = options.languageCode
   }
   const result = await options.client.inspection.inspect(inspectInput)

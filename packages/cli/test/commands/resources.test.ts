@@ -500,6 +500,42 @@ describe('analytics query', () => {
 })
 
 describe('inspect single url', () => {
+  it('forwards languageCode to the SDK', async () => {
+    const c = mkClient()
+    c.inspection.inspect.mockResolvedValue({ indexStatusResult: { verdict: 'PASS' } })
+    await runInspectUrl({
+      client: c as never,
+      siteUrl: 'https://a/',
+      url: 'https://a/p',
+      languageCode: 'pt-BR',
+    })
+    expect(c.inspection.inspect).toHaveBeenCalledWith({
+      siteUrl: 'https://a/',
+      inspectionUrl: 'https://a/p',
+      languageCode: 'pt-BR',
+    })
+  })
+
+  it('omits languageCode when not given', async () => {
+    const c = mkClient()
+    c.inspection.inspect.mockResolvedValue({ indexStatusResult: { verdict: 'PASS' } })
+    await runInspectUrl({ client: c as never, siteUrl: 'https://a/', url: 'https://a/p' })
+    expect(c.inspection.inspect).toHaveBeenCalledWith({
+      siteUrl: 'https://a/',
+      inspectionUrl: 'https://a/p',
+    })
+  })
+
+  it('treats an empty languageCode as absent', async () => {
+    const c = mkClient()
+    c.inspection.inspect.mockResolvedValue({ indexStatusResult: { verdict: 'PASS' } })
+    await runInspectUrl({ client: c as never, siteUrl: 'https://a/', url: 'https://a/p', languageCode: '' })
+    expect(c.inspection.inspect).toHaveBeenCalledWith({
+      siteUrl: 'https://a/',
+      inspectionUrl: 'https://a/p',
+    })
+  })
+
   it('returns PASS verdict with exit 0', async () => {
     const c = mkClient()
     c.inspection.inspect.mockResolvedValue({ indexStatusResult: { verdict: 'PASS' } })

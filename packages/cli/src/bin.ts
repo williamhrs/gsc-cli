@@ -384,6 +384,10 @@ const inspect = defineCommand({
       type: 'string' as const,
       description: 'Filter results: indexed, not-indexed, or errors',
     },
+    language: {
+      type: 'string' as const,
+      description: 'BCP-47 language code for issue messages (e.g. en-US, pt-BR)',
+    },
   },
   async run({ args }) {
     const format = await resolveFormat(args.format)
@@ -421,12 +425,17 @@ const inspect = defineCommand({
     await runCommand({
       command: 'inspect',
       format,
-      execute: async () =>
-        runInspectUrl({
+      execute: async () => {
+        const opts: Parameters<typeof runInspectUrl>[0] = {
           client: await getClient(),
           siteUrl: await getSite(args.site),
           url: args.url!,
-        }),
+        }
+        if (args.language !== undefined && args.language !== '') {
+          opts.languageCode = args.language
+        }
+        return runInspectUrl(opts)
+      },
     })
   },
 })
