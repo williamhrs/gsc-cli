@@ -1,0 +1,37 @@
+packages/sdk/src/resources/sitemaps.ts
+  s_6f0f0b61e7a546::t_7970482bcafe6c 2,9-13,21-22,25-29
+packages/cli/src/bin.ts
+  s_6f0f0b61e7a546::t_7970482bcafe6c 188-194,199-207
+packages/sdk/test/resources/sitemaps.test.ts
+  s_6f0f0b61e7a546::t_71d9bcaa7cf652 33-55
+.changeset/sitemap-index-filter.md
+  s_cf20964e99ff57::t_7e82041d649af3 1-6
+packages/cli/test/commands/resources.test.ts
+  s_6f0f0b61e7a546::t_71d9bcaa7cf652 104-124
+packages/cli/src/commands/sitemaps.ts
+  s_6f0f0b61e7a546::t_7970482bcafe6c 1,10-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "d68b8789aa443501ecf256b33a8c510389156182",
+  "prompts": {},
+  "sessions": {
+    "s_6f0f0b61e7a546": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f62bc-7ad2-7491-b480-19a95cebfaaf",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    },
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
