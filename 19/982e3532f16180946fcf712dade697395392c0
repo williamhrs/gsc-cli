@@ -1,0 +1,34 @@
+packages/cli/test/commands/resources.test.ts
+  s_3a5bd4177746ef::t_eea0e983f4ba7c 275-323
+packages/cli/src/commands/analytics.ts
+  s_3a5bd4177746ef::t_1bcebadefbc832 16,106-113
+  s_cf20964e99ff57::t_ad8f41e85b68c1 114
+packages/cli/src/bin.ts
+  s_3a5bd4177746ef::t_1bcebadefbc832 299-302,335-336
+.changeset/light-rules-argue.md
+  s_cf20964e99ff57::t_8f8406e76dd385 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "19982e3532f16180946fcf712dade697395392c0",
+  "prompts": {},
+  "sessions": {
+    "s_3a5bd4177746ef": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f62b5-aa13-7263-88d2-3f770c2a5035",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    },
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
