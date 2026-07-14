@@ -137,7 +137,7 @@ gsc analytics query --days 7 --dimension query \
 | `=~` | includingRegex |
 | `!=~` | excludingRegex |
 
-Multiple filters are comma-separated. `--limit` above 25,000 auto-paginates.
+Multiple filters are comma-separated and combined with **AND** — the Search Console API ANDs all filters and has no cross-filter OR. To express **OR** within a single dimension, use the `=~` regex operator, e.g. `--filter 'query=~seo|marketing'`. `--limit` above 25,000 auto-paginates.
 
 ### `gsc inspect`
 

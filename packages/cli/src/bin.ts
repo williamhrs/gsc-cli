@@ -316,7 +316,7 @@ const analyticsQuery = defineCommand({
     filter: {
       type: 'string' as const,
       description:
-        'Filter as dim=value (e.g. country=USA, page~/blog/). Repeatable via comma. Operators: = != ~ !~ =~ !=~',
+        'Filter as dim=value (e.g. country=USA, page~/blog/). Comma-separate to AND. For OR within a dimension use the =~ regex operator (e.g. query=~seo|marketing). Operators: = != ~ !~ =~ !=~',
     },
   },
   async run({ args }) {
