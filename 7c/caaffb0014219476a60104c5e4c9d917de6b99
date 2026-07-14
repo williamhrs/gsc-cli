@@ -1,0 +1,40 @@
+packages/cli/src/commands/analytics.ts
+  s_4eb8271a8ca09c::t_bcbbf6c09c4672 1,15,38-47,102-104
+packages/sdk/src/types.ts
+  s_4eb8271a8ca09c::t_bcbbf6c09c4672 36-37,69
+packages/cli/src/bin.ts
+  s_4eb8271a8ca09c::t_bcbbf6c09c4672 24,295-298,327-329
+  s_cf20964e99ff57::t_c9aba72c9d0d7f 330
+packages/sdk/src/resources/analytics.ts
+  s_4eb8271a8ca09c::t_bcbbf6c09c4672 27
+.changeset/tidy-otters-attack.md
+  s_cf20964e99ff57::t_9993fe38c53e1f 1-6
+packages/sdk/test/resources/analytics.test.ts
+  s_4eb8271a8ca09c::t_95ea58fe00b447 135-163
+packages/cli/test/commands/resources.test.ts
+  s_4eb8271a8ca09c::t_95ea58fe00b447 225-249
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "7ccaaffb0014219476a60104c5e4c9d917de6b99",
+  "prompts": {},
+  "sessions": {
+    "s_4eb8271a8ca09c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f62ad-743c-7701-8e20-371fa9ef84f8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    },
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
