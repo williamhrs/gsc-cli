@@ -13,6 +13,7 @@ export interface AnalyticsQueryOptions {
   type?: SearchType
   dataState?: 'final' | 'all'
   aggregationType?: AggregationType
+  startRow?: number
   filters?: string[]
 }
 
@@ -101,6 +102,15 @@ export async function runAnalyticsQuery(options: AnalyticsQueryOptions) {
   if (options.dataState !== undefined) queryInput.dataState = parseDataState(options.dataState)
   if (options.aggregationType !== undefined) {
     queryInput.aggregationType = parseAggregationType(options.aggregationType)
+  }
+  if (options.startRow !== undefined) {
+    if (!Number.isInteger(options.startRow) || options.startRow < 0) {
+      throw Object.assign(new Error(`invalid start row: ${options.startRow}`), {
+        code: 'BAD_ARGS',
+        hint: 'start row must be a non-negative integer (zero-based offset)',
+      })
+    }
+    queryInput.startRow = options.startRow
   }
   if (options.filters !== undefined && options.filters.length > 0) {
     queryInput.dimensionFilterGroups = [

@@ -272,6 +272,55 @@ describe('analytics query', () => {
     expect(arg.aggregationType).toBe('byNewsShowcasePanel')
   })
 
+  it('passes startRow through to the SDK', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+      startRow: 5000,
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.startRow).toBe(5000)
+  })
+
+  it('rejects a negative startRow', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        startRow: -1,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
+  it('rejects a non-numeric startRow (NaN)', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        startRow: Number.NaN,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
+  it('rejects a fractional startRow', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        startRow: 1.5,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
   it('throws when neither --start nor --days provided', async () => {
     const c = mkClient()
     await expect(runAnalyticsQuery({ client: c as never, siteUrl: 'https://a/' })).rejects.toThrow(

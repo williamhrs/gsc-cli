@@ -296,6 +296,10 @@ const analyticsQuery = defineCommand({
       type: 'string' as const,
       description: 'Aggregation: auto (default), byPage, byProperty, byNewsShowcasePanel',
     },
+    'start-row': {
+      type: 'string' as const,
+      description: 'Zero-based row offset to start from (default 0)',
+    },
     filter: {
       type: 'string' as const,
       description:
@@ -328,6 +332,8 @@ const analyticsQuery = defineCommand({
         if (aggregationType !== undefined) {
           opts.aggregationType = aggregationType as AggregationType
         }
+        const startRow = args['start-row']
+        if (startRow !== undefined && startRow !== '') opts.startRow = Number(startRow)
         if (args.filter !== undefined && args.filter !== '') {
           opts.filters = args.filter.split(',').map((f) => f.trim()).filter(Boolean)
         }
