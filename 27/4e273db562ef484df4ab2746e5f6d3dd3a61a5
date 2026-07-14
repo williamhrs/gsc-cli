@@ -1,0 +1,25 @@
+packages/cli/src/bin.ts
+  s_cf20964e99ff57::t_6a1bae88c51800 319
+packages/cli/README.md
+  s_cf20964e99ff57::t_d86ae3eb6d8adf 72-77
+README.md
+  s_cf20964e99ff57::t_203e24c0a6772a 140
+.changeset/filter-or-regex-docs.md
+  s_cf20964e99ff57::t_360411fb886c56 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "274e273db562ef484df4ab2746e5f6d3dd3a61a5",
+  "prompts": {},
+  "sessions": {
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
