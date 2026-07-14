@@ -11,6 +11,7 @@ export interface AnalyticsQueryOptions {
   dimensions?: Dimension[]
   limit?: number
   type?: SearchType
+  dataState?: 'final' | 'all'
   filters?: string[]
 }
 
@@ -30,6 +31,16 @@ function toIsoDate(d: Date): string {
  *   ~   → contains
  */
 type FilterOperator = NonNullable<AnalyticsFilter['operator']>
+
+const DATA_STATES = ['final', 'all'] as const
+
+function parseDataState(raw: string): 'final' | 'all' {
+  if ((DATA_STATES as readonly string[]).includes(raw)) return raw as 'final' | 'all'
+  throw Object.assign(new Error(`invalid data state: ${raw}`), {
+    code: 'BAD_ARGS',
+    hint: 'Valid values: final (default, excludes the last ~2-3 days), all (includes fresh data)',
+  })
+}
 
 function parseFilter(raw: string): AnalyticsFilter {
   const operators: Array<[string, FilterOperator]> = [
@@ -76,6 +87,7 @@ export async function runAnalyticsQuery(options: AnalyticsQueryOptions) {
   }
   if (options.dimensions !== undefined) queryInput.dimensions = options.dimensions
   if (options.type !== undefined) queryInput.type = options.type
+  if (options.dataState !== undefined) queryInput.dataState = parseDataState(options.dataState)
   if (options.filters !== undefined && options.filters.length > 0) {
     queryInput.dimensionFilterGroups = [
       { filters: options.filters.map(parseFilter) },
