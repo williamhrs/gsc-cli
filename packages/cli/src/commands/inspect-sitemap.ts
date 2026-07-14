@@ -1,5 +1,5 @@
 import pLimit from 'p-limit'
-import type { GSCClient, InspectionResult } from '@gsc-cli/sdk'
+import type { GSCClient, InspectionInput, InspectionResult } from '@gsc-cli/sdk'
 import { fetchSitemapUrls } from '../sitemap/fetch-sitemap.js'
 import { EXIT_CODES } from '../output/envelope.js'
 
@@ -48,7 +48,7 @@ async function inspectSitemapUrl(
   failures: FailureRecord[],
 ): Promise<void> {
   try {
-    const inspectInput: { siteUrl: string; inspectionUrl: string; languageCode?: string } = {
+    const inspectInput: InspectionInput = {
       siteUrl: options.siteUrl,
       inspectionUrl: url,
     }
