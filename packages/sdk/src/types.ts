@@ -33,6 +33,8 @@ export type SearchType =
   | 'discover'
   | 'googleNews'
 
+export type AggregationType = 'auto' | 'byPage' | 'byProperty' | 'byNewsShowcasePanel'
+
 export type Dimension =
   | 'query'
   | 'page'
@@ -64,6 +66,7 @@ export interface AnalyticsQueryInput {
   endDate: string
   dimensions?: Dimension[]
   type?: SearchType
+  aggregationType?: AggregationType
   dimensionFilterGroups?: AnalyticsFilterGroup[]
   rowLimit?: number
   startRow?: number

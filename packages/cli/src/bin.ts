@@ -21,7 +21,7 @@ import { runInspectSitemap } from './commands/inspect-sitemap.js'
 import { runConfigSet, runConfigGet, runConfigPath } from './commands/config-cmd.js'
 import { runDoctor } from './commands/doctor.js'
 import type { Format } from './output/envelope.js'
-import type { Dimension, SearchType } from '@gsc-cli/sdk'
+import type { AggregationType, Dimension, SearchType } from '@gsc-cli/sdk'
 
 async function getClient() {
   const cfg = await loadConfig()
@@ -292,6 +292,10 @@ const analyticsQuery = defineCommand({
       description:
         'Data freshness: final (default, excludes last ~2-3 days) or all (includes fresh data)',
     },
+    'aggregation-type': {
+      type: 'string' as const,
+      description: 'Aggregation: auto (default), byPage, byProperty, byNewsShowcasePanel',
+    },
     filter: {
       type: 'string' as const,
       description:
@@ -319,6 +323,10 @@ const analyticsQuery = defineCommand({
         const dataState = args['data-state']
         if (dataState !== undefined) {
           opts.dataState = dataState as 'final' | 'all'
+        }
+        const aggregationType = args['aggregation-type']
+        if (aggregationType !== undefined) {
+          opts.aggregationType = aggregationType as AggregationType
         }
         if (args.filter !== undefined && args.filter !== '') {
           opts.filters = args.filter.split(',').map((f) => f.trim()).filter(Boolean)

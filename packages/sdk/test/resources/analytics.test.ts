@@ -132,6 +132,35 @@ describe('AnalyticsResource', () => {
     expect(call.body.dimensionFilterGroups).toBeDefined()
   })
 
+  it('sends aggregationType in the body when set', async () => {
+    const http = mockHttp()
+    http.request.mockResolvedValue({ rows: [] })
+    const r = new AnalyticsResource(http)
+    await r.query({
+      siteUrl: 'https://a/',
+      startDate: '2026-01-01',
+      endDate: '2026-01-31',
+      aggregationType: 'byPage',
+      rowLimit: 10,
+    })
+    const call = http.request.mock.calls[0]![0] as { body: Record<string, unknown> }
+    expect(call.body.aggregationType).toBe('byPage')
+  })
+
+  it('omits aggregationType from the body when unset', async () => {
+    const http = mockHttp()
+    http.request.mockResolvedValue({ rows: [] })
+    const r = new AnalyticsResource(http)
+    await r.query({
+      siteUrl: 'https://a/',
+      startDate: '2026-01-01',
+      endDate: '2026-01-31',
+      rowLimit: 10,
+    })
+    const call = http.request.mock.calls[0]![0] as { body: Record<string, unknown> }
+    expect(call.body).not.toHaveProperty('aggregationType')
+  })
+
   it('includes _pagination.pagesFetched=1 for single-page response', async () => {
     const http = mockHttp()
     http.request.mockResolvedValue({ rows: [{ keys: ['/'], clicks: 1, impressions: 2, ctr: 0.5, position: 1 }] })

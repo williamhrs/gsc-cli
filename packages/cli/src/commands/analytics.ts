@@ -1,4 +1,4 @@
-import type { GSCClient, Dimension, SearchType, AnalyticsQueryInput, AnalyticsFilter } from '@gsc-cli/sdk'
+import type { GSCClient, Dimension, SearchType, AggregationType, AnalyticsQueryInput, AnalyticsFilter } from '@gsc-cli/sdk'
 
 type Client = Pick<GSCClient, 'analytics' | 'httpClient'>
 
@@ -12,6 +12,7 @@ export interface AnalyticsQueryOptions {
   limit?: number
   type?: SearchType
   dataState?: 'final' | 'all'
+  aggregationType?: AggregationType
   filters?: string[]
 }
 
@@ -33,6 +34,16 @@ function toIsoDate(d: Date): string {
 type FilterOperator = NonNullable<AnalyticsFilter['operator']>
 
 const DATA_STATES = ['final', 'all'] as const
+
+const AGGREGATION_TYPES = ['auto', 'byPage', 'byProperty', 'byNewsShowcasePanel'] as const
+
+function parseAggregationType(raw: string): AggregationType {
+  if ((AGGREGATION_TYPES as readonly string[]).includes(raw)) return raw as AggregationType
+  throw Object.assign(new Error(`invalid aggregation type: ${raw}`), {
+    code: 'BAD_ARGS',
+    hint: 'Valid values: auto, byPage, byProperty, byNewsShowcasePanel',
+  })
+}
 
 function parseDataState(raw: string): 'final' | 'all' {
   if ((DATA_STATES as readonly string[]).includes(raw)) return raw as 'final' | 'all'
@@ -88,6 +99,9 @@ export async function runAnalyticsQuery(options: AnalyticsQueryOptions) {
   if (options.dimensions !== undefined) queryInput.dimensions = options.dimensions
   if (options.type !== undefined) queryInput.type = options.type
   if (options.dataState !== undefined) queryInput.dataState = parseDataState(options.dataState)
+  if (options.aggregationType !== undefined) {
+    queryInput.aggregationType = parseAggregationType(options.aggregationType)
+  }
   if (options.filters !== undefined && options.filters.length > 0) {
     queryInput.dimensionFilterGroups = [
       { filters: options.filters.map(parseFilter) },
