@@ -222,6 +222,31 @@ describe('analytics query', () => {
     ).rejects.toMatchObject({ code: 'BAD_ARGS' })
   })
 
+  it('passes aggregationType through to the SDK', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+      aggregationType: 'byProperty',
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.aggregationType).toBe('byProperty')
+  })
+
+  it('rejects an invalid aggregationType', async () => {
+    const c = mkClient()
+    await expect(
+      runAnalyticsQuery({
+        client: c as never,
+        siteUrl: 'https://a/',
+        start: '2026-01-01',
+        aggregationType: 'sideways' as never,
+      }),
+    ).rejects.toMatchObject({ code: 'BAD_ARGS' })
+  })
+
   it('throws when neither --start nor --days provided', async () => {
     const c = mkClient()
     await expect(runAnalyticsQuery({ client: c as never, siteUrl: 'https://a/' })).rejects.toThrow(

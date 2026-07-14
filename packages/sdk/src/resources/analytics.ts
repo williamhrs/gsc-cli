@@ -24,6 +24,7 @@ export class AnalyticsResource {
       }
       if (input.dimensions !== undefined) body.dimensions = input.dimensions
       if (input.type !== undefined) body.type = input.type
+      if (input.aggregationType !== undefined) body.aggregationType = input.aggregationType
       if (input.dimensionFilterGroups !== undefined) body.dimensionFilterGroups = input.dimensionFilterGroups
       if (input.dataState !== undefined) body.dataState = input.dataState
 
