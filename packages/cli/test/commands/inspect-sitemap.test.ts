@@ -131,4 +131,35 @@ describe('runInspectSitemap', () => {
     })
     expect(fetchFn).toHaveBeenCalledWith('https://a/sitemap.xml')
   })
+
+  it('forwards languageCode to every inspection when set', async () => {
+    const client = mkClient({
+      'https://a/1': { verdict: 'PASS' },
+      'https://a/2': { verdict: 'PASS' },
+      'https://a/3': { verdict: 'PASS' },
+    })
+    await runInspectSitemap({
+      client: client as never,
+      siteUrl: 'https://a/',
+      concurrency: 1,
+      languageCode: 'pt-BR',
+      fetchSitemap,
+    })
+    for (const call of client.inspection.inspect.mock.calls) {
+      expect(call[0]).toMatchObject({ languageCode: 'pt-BR' })
+    }
+  })
+
+  it('omits languageCode from inspections when not set', async () => {
+    const client = mkClient({ 'https://a/1': { verdict: 'PASS' }, 'https://a/2': { verdict: 'PASS' }, 'https://a/3': { verdict: 'PASS' } })
+    await runInspectSitemap({
+      client: client as never,
+      siteUrl: 'https://a/',
+      concurrency: 1,
+      fetchSitemap,
+    })
+    for (const call of client.inspection.inspect.mock.calls) {
+      expect(call[0]).not.toHaveProperty('languageCode')
+    }
+  })
 })

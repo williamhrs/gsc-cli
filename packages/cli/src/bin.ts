@@ -401,6 +401,7 @@ const inspect = defineCommand({
           const opts: Parameters<typeof runInspectSitemap>[0] = { client, siteUrl }
           if (args.url !== undefined && args.url !== '') opts.sitemapUrl = args.url
           if (args.concurrency !== undefined && args.concurrency !== '') opts.concurrency = Number(args.concurrency)
+          if (args.language !== undefined && args.language !== '') opts.languageCode = args.language
           if (args.filter !== undefined && args.filter !== '') {
             const valid = ['indexed', 'not-indexed', 'errors'] as const
             if (!valid.includes(args.filter as typeof valid[number])) {
