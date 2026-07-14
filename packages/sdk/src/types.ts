@@ -41,6 +41,7 @@ export type Dimension =
   | 'country'
   | 'device'
   | 'date'
+  | 'hour'
   | 'searchAppearance'
 
 export interface AnalyticsFilter {
@@ -70,7 +71,7 @@ export interface AnalyticsQueryInput {
   dimensionFilterGroups?: AnalyticsFilterGroup[]
   rowLimit?: number
   startRow?: number
-  dataState?: 'final' | 'all'
+  dataState?: 'final' | 'all' | 'hourly_all'
 }
 
 export interface AnalyticsRow {

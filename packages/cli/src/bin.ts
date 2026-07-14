@@ -290,7 +290,7 @@ const analyticsQuery = defineCommand({
     },
     dimension: {
       type: 'string' as const,
-      description: 'Comma-separated dimensions: page,query,country,device,date,searchAppearance',
+      description: 'Comma-separated dimensions: page,query,country,device,date,hour,searchAppearance',
     },
     limit: {
       type: 'string' as const,
@@ -303,7 +303,7 @@ const analyticsQuery = defineCommand({
     'data-state': {
       type: 'string' as const,
       description:
-        'Data freshness: final (default, excludes last ~2-3 days) or all (includes fresh data)',
+        'Data freshness: final (default), all (includes fresh data), hourly_all (pairs with the hour dimension)',
     },
     'aggregation-type': {
       type: 'string' as const,
@@ -339,7 +339,7 @@ const analyticsQuery = defineCommand({
         if (args.type !== undefined && args.type !== '') opts.type = args.type as SearchType
         const dataState = args['data-state']
         if (dataState !== undefined) {
-          opts.dataState = dataState as 'final' | 'all'
+          opts.dataState = dataState as 'final' | 'all' | 'hourly_all'
         }
         const aggregationType = args['aggregation-type']
         if (aggregationType !== undefined) {
