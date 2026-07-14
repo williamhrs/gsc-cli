@@ -1,0 +1,35 @@
+.changeset/filter-groups-or.md
+  s_cf20964e99ff57::t_5c5856646a3bfe 1-5
+packages/cli/test/commands/resources.test.ts
+  s_9d3edd8feab245::t_277b37c5af8827 447,455,458,462-476
+  s_cf20964e99ff57::t_b0126878991ca8 477-478
+packages/cli/src/bin.ts
+  s_9d3edd8feab245::t_871a6c669e5857 351
+  s_9d3edd8feab245::t_3d5be8cfebb47a 319-320,352-355
+packages/cli/src/commands/analytics.ts
+  s_9d3edd8feab245::t_3d5be8cfebb47a 85-94,135
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "c63a1d7b939d0901180bde20d3f8142aefebc7f2",
+  "prompts": {},
+  "sessions": {
+    "s_9d3edd8feab245": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f62cf-5b40-7a62-b8cd-4dc7a7b8a0c6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    },
+    "s_cf20964e99ff57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ba1445ae-2644-41e8-a00a-57cde49da7a7",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "William Rufino <williamhrs@gmail.com>"
+    }
+  }
+}
