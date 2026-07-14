@@ -1,4 +1,4 @@
-import type { GSCClient } from '@gsc-cli/sdk'
+import type { GSCClient, SitemapsListRequest } from '@gsc-cli/sdk'
 
 type Client = Pick<GSCClient, 'sitemaps' | 'httpClient'>
 
@@ -7,8 +7,18 @@ function getRateLimit(client: Client) {
   return snap.remaining !== -1 ? snap : undefined
 }
 
-export async function runSitemapsList({ client, siteUrl }: { client: Client; siteUrl: string }) {
-  const res = await client.sitemaps.list({ siteUrl })
+export async function runSitemapsList({
+  client,
+  siteUrl,
+  sitemapIndex,
+}: {
+  client: Client
+  siteUrl: string
+  sitemapIndex?: string
+}) {
+  const input: SitemapsListRequest = { siteUrl }
+  if (sitemapIndex !== undefined) input.sitemapIndex = sitemapIndex
+  const res = await client.sitemaps.list(input)
   const data = res.sitemap ?? []
   const rateLimit = getRateLimit(client)
   return rateLimit !== undefined ? { data, rateLimit } : { data }

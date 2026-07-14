@@ -185,13 +185,26 @@ const sites = defineCommand({
 
 const sitemapsList = defineCommand({
   meta: { name: 'list', description: 'List sitemaps' },
-  args: globalArgs,
+  args: {
+    ...globalArgs,
+    'sitemap-index': {
+      type: 'string' as const,
+      description: 'Only list sitemaps contained in this sitemap index URL',
+    },
+  },
   async run({ args }) {
     await runCommand({
       command: 'sitemaps list',
       format: await resolveFormat(args.format),
-      execute: async () =>
-        runSitemapsList({ client: await getClient(), siteUrl: await getSite(args.site) }),
+      execute: async () => {
+        const opts: Parameters<typeof runSitemapsList>[0] = {
+          client: await getClient(),
+          siteUrl: await getSite(args.site),
+        }
+        const sitemapIndex = args['sitemap-index']
+        if (sitemapIndex !== undefined && sitemapIndex !== '') opts.sitemapIndex = sitemapIndex
+        return runSitemapsList(opts)
+      },
     })
   },
 })

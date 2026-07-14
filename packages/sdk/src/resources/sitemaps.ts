@@ -1,9 +1,14 @@
 import type { SitemapEntry } from '../types.js'
-import type { HttpClient } from '../transport/http-client.js'
+import type { HttpClient, HttpRequest } from '../transport/http-client.js'
 
 export interface SitemapRequest {
   siteUrl: string
   feedpath?: string
+}
+
+export interface SitemapsListRequest {
+  siteUrl: string
+  sitemapIndex?: string
 }
 
 export interface SitemapsListResponse {
@@ -13,11 +18,15 @@ export interface SitemapsListResponse {
 export class SitemapsResource {
   constructor(readonly httpClient: HttpClient) {}
 
-  async list(input: SitemapRequest): Promise<SitemapsListResponse> {
-    return this.httpClient.request<SitemapsListResponse>({
+  async list(input: SitemapsListRequest): Promise<SitemapsListResponse> {
+    const req: HttpRequest = {
       method: 'GET',
       path: `/sites/${encodeURIComponent(input.siteUrl)}/sitemaps`,
-    })
+    }
+    if (input.sitemapIndex !== undefined) {
+      req.query = { sitemapIndex: input.sitemapIndex }
+    }
+    return this.httpClient.request<SitemapsListResponse>(req)
   }
 
   async get(input: Required<SitemapRequest>): Promise<SitemapEntry> {
