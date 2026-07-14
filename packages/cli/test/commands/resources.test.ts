@@ -188,6 +188,33 @@ describe('analytics query', () => {
     expect(arg.endDate).toBe('2026-01-31')
   })
 
+  it('accepts the hour dimension', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+      dimensions: ['hour'],
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.dimensions).toEqual(['hour'])
+  })
+
+  it('accepts the hourly_all data state', async () => {
+    const c = mkClient()
+    c.analytics.query.mockResolvedValue({ rows: [] })
+    await runAnalyticsQuery({
+      client: c as never,
+      siteUrl: 'https://a/',
+      start: '2026-01-01',
+      dimensions: ['hour'],
+      dataState: 'hourly_all',
+    })
+    const arg = c.analytics.query.mock.calls[0]![0]
+    expect(arg.dataState).toBe('hourly_all')
+  })
+
   it('passes dataState through to the SDK', async () => {
     const c = mkClient()
     c.analytics.query.mockResolvedValue({ rows: [] })

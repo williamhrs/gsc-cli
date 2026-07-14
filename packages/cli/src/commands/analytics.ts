@@ -11,7 +11,7 @@ export interface AnalyticsQueryOptions {
   dimensions?: Dimension[]
   limit?: number
   type?: SearchType
-  dataState?: 'final' | 'all'
+  dataState?: 'final' | 'all' | 'hourly_all'
   aggregationType?: AggregationType
   startRow?: number
   filters?: string[]
@@ -34,7 +34,7 @@ function toIsoDate(d: Date): string {
  */
 type FilterOperator = NonNullable<AnalyticsFilter['operator']>
 
-const DATA_STATES = ['final', 'all'] as const
+const DATA_STATES = ['final', 'all', 'hourly_all'] as const
 
 const AGGREGATION_TYPES = ['auto', 'byPage', 'byProperty', 'byNewsShowcasePanel'] as const
 
@@ -49,11 +49,13 @@ function parseAggregationType(raw: string): AggregationType {
   })
 }
 
-function parseDataState(raw: string): 'final' | 'all' {
-  if ((DATA_STATES as readonly string[]).includes(raw)) return raw as 'final' | 'all'
+function parseDataState(raw: string): 'final' | 'all' | 'hourly_all' {
+  if ((DATA_STATES as readonly string[]).includes(raw)) {
+    return raw as 'final' | 'all' | 'hourly_all'
+  }
   throw Object.assign(new Error(`invalid data state: ${raw}`), {
     code: 'BAD_ARGS',
-    hint: 'Valid values: final (default, excludes the last ~2-3 days), all (includes fresh data)',
+    hint: 'Valid values: final (default), all (includes fresh data), hourly_all (for the hour dimension)',
   })
 }
 
