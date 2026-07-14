@@ -30,6 +30,29 @@ describe('SitemapsResource', () => {
     expect(out.sitemap).toBeUndefined()
   })
 
+  it('list passes sitemapIndex as a query param', async () => {
+    const http = mockHttp()
+    http.request.mockResolvedValue({ sitemap: [] })
+    const r = new SitemapsResource(http)
+    await r.list({ siteUrl: SITE, sitemapIndex: 'https://a/sitemapindex.xml' })
+    expect(http.request).toHaveBeenCalledWith({
+      method: 'GET',
+      path: `/sites/${SITE_ENC}/sitemaps`,
+      query: { sitemapIndex: 'https://a/sitemapindex.xml' },
+    })
+  })
+
+  it('list omits the query key entirely when sitemapIndex is absent', async () => {
+    const http = mockHttp()
+    http.request.mockResolvedValue({ sitemap: [] })
+    const r = new SitemapsResource(http)
+    await r.list({ siteUrl: SITE })
+    expect(http.request).toHaveBeenCalledWith({
+      method: 'GET',
+      path: `/sites/${SITE_ENC}/sitemaps`,
+    })
+  })
+
   it('get GETs the feedpath', async () => {
     const http = mockHttp()
     http.request.mockResolvedValue({ path: 'https://a/sitemap.xml' })
