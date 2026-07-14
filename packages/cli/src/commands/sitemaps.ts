@@ -17,7 +17,7 @@ export async function runSitemapsList({
   sitemapIndex?: string
 }) {
   const input: SitemapsListRequest = { siteUrl }
-  if (sitemapIndex !== undefined) input.sitemapIndex = sitemapIndex
+  if (sitemapIndex !== undefined && sitemapIndex !== '') input.sitemapIndex = sitemapIndex
   const res = await client.sitemaps.list(input)
   const data = res.sitemap ?? []
   const rateLimit = getRateLimit(client)

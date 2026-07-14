@@ -122,6 +122,13 @@ describe('sitemaps commands', () => {
     expect(c.sitemaps.list).toHaveBeenCalledWith({ siteUrl: 'https://a/' })
   })
 
+  it('list treats an empty sitemapIndex as absent', async () => {
+    const c = mkClient()
+    c.sitemaps.list.mockResolvedValue({ sitemap: [] })
+    await runSitemapsList({ client: c as never, siteUrl: 'https://a/', sitemapIndex: '' })
+    expect(c.sitemaps.list).toHaveBeenCalledWith({ siteUrl: 'https://a/' })
+  })
+
   it('get passes siteUrl and feedpath through', async () => {
     const c = mkClient()
     c.sitemaps.get.mockResolvedValue({ path: 'sitemap.xml' })
